@@ -12,8 +12,8 @@ node {
 
     stage('Prisma Cloud Scan Lambda Function IaC') {
         sh('terraform init')
-        sh('terraform plan -out=MYPLAN.bin')
-        sh('terraform show -json MYPLAN.bin > MYPLAN.json')
+        sh('terraform -chdir=terraform plan -out=MYPLAN.bin')
+        sh('terraform -chdir=terraform show -json MYPLAN.bin > MYPLAN.json')
         try {
 	        withCredentials([
             	string(
