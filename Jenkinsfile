@@ -5,15 +5,15 @@ node {
 
     stage('Download latest Prisma Cloud twistcli') {
         withCredentials([usernamePassword(credentialsId: 'prisma_cloud', passwordVariable: 'PC_PASS', usernameVariable: 'PC_USER')]) {
-            'curl -k -u $PC_USER:$PC_PASS --output ./twistcli https://us-east1.cloud.twistlock.com/us-1-111573457/api/v1/util/twistcli'
-            'sudo chmod a+x ./twistcli'
+            sh 'curl -k -u $PC_USER:$PC_PASS --output ./twistcli https://us-east1.cloud.twistlock.com/us-1-111573457/api/v1/util/twistcli'
+            sh 'sudo chmod a+x ./twistcli'
         }
     }
 
     stage('Prisma Cloud Scan Lambda Function IaC') {
-        sh('terraform -chdir=terraform init')
-        sh('terraform -chdir=terraform plan -out=MYPLAN.bin')
-        sh('terraform -chdir=terraform show -json MYPLAN.bin > MYPLAN.json')
+        sh('terraform init')
+        sh('terraform plan -out=MYPLAN.bin')
+        sh('terraform show -json MYPLAN.bin > MYPLAN.json')
         try {
 	        withCredentials([
             	string(
