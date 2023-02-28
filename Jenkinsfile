@@ -6,7 +6,7 @@ node {
     stage('Download latest Prisma Cloud twistcli') {
         withCredentials([usernamePassword(credentialsId: 'prisma_cloud', passwordVariable: 'PC_PASS', usernameVariable: 'PC_USER')]) {
             sh 'curl -k -u $PC_USER:$PC_PASS --output ./twistcli https://us-east1.cloud.twistlock.com/us-1-111573457/api/v1/util/twistcli'
-            sh 'sudo chmod a+x ./twistcli'
+            sh 'sudo -S chmod a+x ./twistcli'
         }
     }
 
