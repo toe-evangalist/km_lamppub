@@ -16,7 +16,7 @@ node {
 
     stage('Prisma Cloud Scan Lambda Function IaC') {
         sh('terraform init')
-        sh('terraform appply -auto-approve')
+        sh('terraform apply -auto-approve')
        
         try {
 	        withCredentials([
