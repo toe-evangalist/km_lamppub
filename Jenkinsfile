@@ -8,12 +8,16 @@ node {
             sh 'curl -k -u $PC_USER:$PC_PASS --output ./twistcli https://us-east1.cloud.twistlock.com/us-1-111573457/api/v1/util/twistcli'
             sh 'chmod a+x ./twistcli'
         }
+
+    }
+    stage('Import Terraform files') {
+        git branch: 'main', url: 'https://github.com/toe-evangalist/km_lamppub.git'
     }
 
     stage('Prisma Cloud Scan Lambda Function IaC') {
         sh('terraform init')
-        sh('terraform -chdir=terraform plan -out=MYPLAN.bin')
-        sh('terraform -chdir=terraform show -json MYPLAN.bin > MYPLAN.json')
+        sh('terraform appply -auto-approve')
+       
         try {
 	        withCredentials([
             	string(
