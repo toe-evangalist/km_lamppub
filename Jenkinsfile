@@ -16,7 +16,6 @@ node {
 
     stage('Prisma Cloud Scan Lambda Function IaC') {
         sh('terraform init')
-        sh('terraform apply -auto-approve')
         sh('terraform plan -out=MYPLAN.bin')
         sh('terraform show -json MYPLAN.bin > MYPLAN.json')
        
