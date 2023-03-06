@@ -17,6 +17,8 @@ node {
     stage('Prisma Cloud Scan Lambda Function IaC') {
         sh('terraform init')
         sh('terraform apply -auto-approve')
+        sh('terraform plan -out=MYPLAN.bin')
+        sh('terraform show -json MYPLAN.bin > MYPLAN.json')
        
         try {
 	        withCredentials([
@@ -25,8 +27,8 @@ node {
               		variable: 'BC_API')
             ]) {
                 // IF YOU WANT THE BUILD TO PASS, USE THE ITEM WITH --check MEDIUM
-		        response = sh(script:"checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id gbaileymcewan/lambdaapp -b main --soft-fail -o junitxml > result.xml || true", returnStdout:true).trim() // -o junitxml > result.xml || true"
-                //response = sh(script:"checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id gbaileymcewan/lambdaapp -b main --check MEDIUM --soft-fail -o junitxml > result.xml || true", returnStdout:true).trim()
+		        response = sh(script:"checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --soft-fail -o junitxml > result.xml || true", returnStdout:true).trim() // -o junitxml > result.xml || true"
+                //response = sh(script:"checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --check MEDIUM --soft-fail -o junitxml > result.xml || true", returnStdout:true).trim()
             }
 		
 	        response = sh(script:"cat result.xml", returnStdout:true)
@@ -39,8 +41,8 @@ node {
               	variable: 'BC_API')
             ]) { 
                 // IF YOU WANT THE BUILD TO PASS, USE THE ITEM WITH --check MEDIUM   
-                sh('checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id gbaileymcewan/lambdaapp -b main --compact --quiet --soft-fail')
-                //sh('checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id gbaileymcewan/lambdaapp -b main --check MEDIUM --compact --quiet --soft-fail')
+                sh('checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --compact --quiet --soft-fail')
+                //sh('checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --check MEDIUM --compact --quiet --soft-fail')
 	        }
         }    
 	    catch (err) {
@@ -70,7 +72,7 @@ node {
               		credentialsId: 'bc-api-key',
               		variable: 'BC_API')
             ]) {
-		        response = sh(script:"checkov --file nginx/Dockerfile --bc-api-key $BC_API --repo-id gbaileymcewan/lambdaapp -b main --soft-fail -o junitxml > result.xml || true", returnStdout:true).trim() // -o junitxml > result.xml || true"
+		        response = sh(script:"checkov --file nginx/Dockerfile --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --soft-fail -o junitxml > result.xml || true", returnStdout:true).trim() // -o junitxml > result.xml || true"
             }
 		
 	        //print "${response}"
@@ -83,7 +85,7 @@ node {
               	credentialsId: 'bc-api-key',
               	variable: 'BC_API')
             ]) {    
-                sh('checkov --file nginx/Dockerfile --bc-api-key $BC_API --repo-id gbaileymcewan/lambdaapp -b main --compact --quiet --soft-fail') 
+                sh('checkov --file nginx/Dockerfile --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --compact --quiet --soft-fail') 
                 // --soft-fail')
 	        }
         }    
@@ -140,7 +142,7 @@ node {
               		credentialsId: 'bc-api-key',
               		variable: 'BC_API')
              ]) {
-		        response = sh(script:"checkov --file k8s_iac/myNginx.yml --bc-api-key $BC_API --repo-id gbaileymcewan/lambdaapp -b main --check MEDIUM --compact --quiet -o junitxml > result.xml || true", returnStdout:true).trim() // -o junitxml > result.xml || true"
+		        response = sh(script:"checkov --file k8s_iac/myNginx.yml --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --check MEDIUM --compact --quiet -o junitxml > result.xml || true", returnStdout:true).trim() // -o junitxml > result.xml || true"
              }
 		
 	        //print "${response}"
@@ -153,7 +155,7 @@ node {
               	credentialsId: 'bc-api-key',
               	variable: 'BC_API')
             ]) {    
-                sh('checkov --file k8s_iac/myNginx.yml --bc-api-key $BC_API --repo-id gbaileymcewan/lambdaapp -b main --check MEDIUM --compact --quiet --soft-fail')
+                sh('checkov --file k8s_iac/myNginx.yml --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --check MEDIUM --compact --quiet --soft-fail')
                 // --soft-fail')
 	        }
 	    }
