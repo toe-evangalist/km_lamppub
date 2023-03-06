@@ -26,8 +26,8 @@ node {
               		variable: 'BC_API')
             ]) {
                 // IF YOU WANT THE BUILD TO PASS, USE THE ITEM WITH --check MEDIUM
-		        response = sh(script:"checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --soft-fail -o junitxml > result.xml || true", returnStdout:true).trim() // -o junitxml > result.xml || true"
-                //response = sh(script:"checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --check MEDIUM --soft-fail -o junitxml > result.xml || true", returnStdout:true).trim()
+		        //response = sh(script:"checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --soft-fail -o junitxml > result.xml || true", returnStdout:true).trim() // -o junitxml > result.xml || true"
+                response = sh(script:"checkov --file MYPLAN.json --bc-api-key $BC_API --repo-id toe-evangalist/km_lamppub -b main --check MEDIUM --soft-fail -o junitxml > result.xml || true", returnStdout:true).trim()
             }
 		
 	        response = sh(script:"cat result.xml", returnStdout:true)
