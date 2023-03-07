@@ -16,8 +16,6 @@ node {
 
     stage('Prisma Cloud Scan Lambda Function IaC') {
         sh('terraform init')
-        sh('export $AWS_KEY')
-        sh ('export $AWS_Secret')
         sh('terraform plan -out=MYPLAN.bin')
         sh('terraform show -json MYPLAN.bin > MYPLAN.json')
        
