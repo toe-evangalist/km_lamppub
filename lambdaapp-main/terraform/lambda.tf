@@ -16,6 +16,10 @@ resource "aws_iam_role" "iam_for_lambda" {
   ]
 }
 EOF
+  tags = {
+    git_org  = "toe-evangalist"
+    git_repo = "km_lamppub"
+  }
 }
 
 resource "aws_lambda_function" "myHtmlFunction2" {
@@ -34,7 +38,9 @@ resource "aws_lambda_function" "myHtmlFunction2" {
   runtime = "python3.8"
 
   tags = {
-    Name = "GordonRocks"
+    Name     = "GordonRocks"
+    git_org  = "toe-evangalist"
+    git_repo = "km_lamppub"
   }
 }
 
